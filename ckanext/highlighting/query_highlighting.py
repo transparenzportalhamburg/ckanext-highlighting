@@ -48,22 +48,18 @@ class HighlightingPackageSearchQuery(PackageSearchQuery):
     def addHighlightedText(self, highlighting_dict, results):
     	'''
         This function adds the highlighted text returned by the solr search
-        to package extras and to the validated_data_dict.
+        to package extras.
         '''
         if(results):
             for result in results: 		
         	id = result['index_id']
                 package_dict = json.loads(result['data_dict'])
-                validated_data_dict = json.loads(package_dict['validated_data_dict'])
-
+                
 		               
                 if id in highlighting_dict.keys():
                     #if len(highlighting_dict[id]) > 0:
-                    validated_data_dict['extras'].append({'value': highlighting_dict[id], 'key' : 'highlighting'})
-                    package_dict['extras'].append({'value': highlighting_dict[id], 'key' : 'highlighting'})
-
-		    
-                package_dict['validated_data_dict'] = json.dumps(validated_data_dict)
+                    package_dict['extras'].append({'value': highlighting_dict[id], 'key' : 'highlighting'})    
+                
                 result['data_dict'] = json.dumps(package_dict)
     
         return results

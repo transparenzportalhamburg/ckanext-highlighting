@@ -27,21 +27,21 @@ QUERY_FIELDS = "name^4 title^4 tags^2 groups^2 text"
 solr_regex = re.compile(r'([\\+\-&|!(){}\[\]^"~*?:])')
 
 class HighlightingPackageSearchQuery(PackageSearchQuery):
-
     def normalize_query_keys(self, query):
-	'''
-	Many Solr highlighting parameters are in a dotted notation (e.g.,
-        `hl.simple.post`).  For such parameters, the dots will be replaced 
-        with underscores which is required by the solr function 
-        raw_query(**params).
-	'''
+        
+    	'''
+    	Many Solr highlighting parameters are in a dotted notation (e.g.,
+            `hl.simple.post`).  For such parameters, the dots will be replaced 
+            with underscores which is required by the solr function 
+            raw_query(**params).
+    	'''
         normalized_query = {}
         if query:
             for key, value in query.iteritems():
                 if key.startswith('hl.'):
                     normalized_query[key.replace('.','_')] = value
-        	else:
-		    normalized_query[key] = value
+                else:
+                    normalized_query[key] = value
         return normalized_query
 
 
@@ -52,7 +52,7 @@ class HighlightingPackageSearchQuery(PackageSearchQuery):
         '''
         if(results):
             for result in results: 		
-        	id = result['index_id']
+                id = result['index_id']
                 package_dict = json.loads(result['data_dict'])
                 
 		               
@@ -79,18 +79,18 @@ class HighlightingPackageSearchQuery(PackageSearchQuery):
        
         assert isinstance(query, (dict, MultiDict))
         # check that query keys are valid
-	valid_params = []
-	invalid_params = []
+        valid_params = []
+        invalid_params = []
         for key in query.keys():
-		if key in VALID_SOLR_PARAMETERS or key == 'hl' or key.startswith('hl.'):
-			valid_params.append(key)
-		else:
-			invalid_params.append(key)
+            if key in VALID_SOLR_PARAMETERS or key == 'hl' or key.startswith('hl.'):
+                valid_params.append(key)
+            else:
+                invalid_params.append(key)
+        
+        if len(invalid_params) > 0:
+            raise SearchQueryError("Invalid search parameters: %s" % invalid_params)
 
-	if len(invalid_params) > 0:
-		raise SearchQueryError("Invalid search parameters: %s" % invalid_params)
-
-	query = self.normalize_query_keys(query)
+	    query = self.normalize_query_keys(query)
               
 
         # default query is to return all documents
@@ -128,7 +128,7 @@ class HighlightingPackageSearchQuery(PackageSearchQuery):
 
         # return the package ID and search scores
         query['fl'] = query.get('fl', 'name')
-	query['fl'] = query['fl'] + ' index_id'
+        query['fl'] = query['fl'] + ' index_id'
 
         # return results as json encoded string
         query['wt'] = query.get('wt', 'json')
@@ -170,7 +170,7 @@ class HighlightingPackageSearchQuery(PackageSearchQuery):
                 for extra_key in extra_keys:
                     value = result.pop(extra_key)
                     extras[extra_key[len('extras_'):]] = value
-		if extra_keys:
+                if extra_keys:
                     result['extras'] = extras
 
                	   

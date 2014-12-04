@@ -1,0 +1,7 @@
+eclipse.preferences.version=1
+encoding//ckanext/__init__.py=UTF-8
+encoding//ckanext/highlighting/__init__.py=UTF-8
+encoding//ckanext/highlighting/query_highlighting.py=UTF-8
+encoding//ckanext/highlighting/search_api.py=UTF-8
+encoding/README=UTF-8
+encoding/setup.py=UTF-8

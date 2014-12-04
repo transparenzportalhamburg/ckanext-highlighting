@@ -17,9 +17,9 @@ log = logging.getLogger(__name__)
 _open_licenses = None
 
 VALID_SOLR_PARAMETERS = set([
-    'q', 'fl', 'fq', 'rows', 'sort', 'start', 'wt', 'qf', 'bf', 'boost',
-    'facet', 'facet.mincount', 'facet.limit', 'facet.field',
-    'extras', 'fq_list', 'tie', 'defType', 'mm'
+                             'q', 'fl', 'fq', 'rows', 'sort', 'start', 'wt', 'qf', 'bf', 'boost',
+                             'facet', 'facet.mincount', 'facet.limit', 'facet.field',
+                             'extras', 'fq_list', 'tie', 'defType', 'mm'
 ])
 
 QUERY_FIELDS = "name^4 title^4 tags^2 groups^2 text"
@@ -28,12 +28,11 @@ solr_regex = re.compile(r'([\\+\-&|!(){}\[\]^"~*?:])')
 
 class HighlightingPackageSearchQuery(PackageSearchQuery):
     def normalize_query_keys(self, query):
-        
     	'''
     	Many Solr highlighting parameters are in a dotted notation (e.g.,
-            `hl.simple.post`).  For such parameters, the dots will be replaced 
-            with underscores which is required by the solr function 
-            raw_query(**params).
+        `hl.simple.post`).  For such parameters, the dots will be replaced 
+        with underscores which is required by the solr function 
+        raw_query(**params).
     	'''
         normalized_query = {}
         if query:

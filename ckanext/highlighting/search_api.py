@@ -66,7 +66,6 @@ class HighlightingSearchApi(SingletonPlugin):
 
         return action_functions
     
-     
 
 def _get_functions():
     return {            

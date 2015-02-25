@@ -11,6 +11,7 @@ The highlighted text returned by solr will be added to package extras.
 Installation
 ============
 |
+
 1. Install the extension into your python environment::
 
    (pyenv) $ pip install -e git+https://race.informatik.uni-hamburg.de/inforeggroup/ckanext-highlighting.git@egg=ckanext-highlighting
@@ -43,18 +44,15 @@ Example Query::
     http://test.ckan.net/api/3/action/package_search_highlighted?q=test&hl=true&hl.fl=notes 
     
 Result::   
-   {"count": 4,
-    "sort": "score desc, metadata_modified desc",
-    "facets": { },
-    "results": [
-        { ...
-          extras": [
-            { "value": {
-                  "notes": ["This is a <em>test</em> snippet"]
-               },
-                "key": "highlighting"
-             }
-             ...
+   {'count': 4,
+    'sort': 'score desc, metadata_modified desc',
+    'facets': { },
+    'results': [
+    { ...
+          'extras': [
+            { 'value': {'notes': ['This is a <em>test</em> snippet']},
+               'key': 'highlighting'
+            }
            ]
         }
       ]

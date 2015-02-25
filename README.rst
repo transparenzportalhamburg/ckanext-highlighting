@@ -40,20 +40,24 @@ All parameters are optional. You can use as many or as few of them as you want.
 When highlighting is requested, package_search_highlighted adds for each package a new metadata field 'highlighting' 
 to extras listing all of the highlighted phrases found in each package.
 
+|
+
 Example Query::
     http://test.ckan.net/api/3/action/package_search_highlighted?q=test&hl=true&hl.fl=notes 
-    
+
+|
+
 Result::   
    {'count': 4,
     'sort': 'score desc, metadata_modified desc',
     'facets': { },
     'results': [
-    { ...
+       { 
           'extras': [
-            { 'value': {'notes': ['This is a <em>test</em> snippet']},
-               'key': 'highlighting'
-            }
-           ]
+                {  'value': {'notes': ['This is a <em>test</em> snippet']},
+                   'key': 'highlighting'
+                }
+            ]
         }
       ]
     }

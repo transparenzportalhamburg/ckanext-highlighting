@@ -1,6 +1,7 @@
 =================
 ckan-highlighting
 =================
+|
 
 An action API function for extending the functionality provided by the action API function package_search by allowing solr highlighting query parameters.
 The highlighted text returned by solr will be added to package extras.
@@ -10,12 +11,12 @@ The highlighted text returned by solr will be added to package extras.
 Installation
 ============
 |
-1. Install the extension into your python environment:
+1. Install the extension into your python environment::
 
    (pyenv) $ pip install -e git+https://race.informatik.uni-hamburg.de/inforeggroup/ckanext-highlighting.git@egg=ckanext-highlighting
 
 
-2. Add the plugin to the CKAN configuration ini file:
+2. Add the plugin to the CKAN configuration ini file::
 
     ckan.plugins = solr_highlighting
 

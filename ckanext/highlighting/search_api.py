@@ -77,7 +77,7 @@ def _get_functions():
 def package_search_highlighted(context, data_dict):
     '''
     This function extends the functionality provided by package_search 
-    by allowing highlighting queries. The highlighted text will be added
+    by allowing highlighting queries. The highlight text will be added
     to package extras. This action accepts all solr highlighting query 
     parameters. 
     '''

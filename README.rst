@@ -14,7 +14,7 @@ Installation
 
 1. Install the extension into your python environment::
 
-   (pyenv) $ pip install -e git+https://race.informatik.uni-hamburg.de/inforeggroup/ckanext-highlighting.git@egg=ckanext-highlighting
+   (pyenv) $ pip install -e git+https://github.com/transparenzportalhamburg/ckanext-highlighting.git@egg=ckanext-highlighting
 
 
 2. Add the plugin to the CKAN configuration ini file::

@@ -11,3 +11,6 @@ development.ini
 *.swp
 *~
 node_modules
+.settings
+.vscode
+.pytest_cache

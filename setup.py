@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import sys, os
 
-version = '0.1'
+version = '3.7'
 
 setup(
 	name='ckanext-highlighting',
@@ -27,6 +27,7 @@ setup(
     
     	[ckan.plugins]
     	solr_highlighting=ckanext.highlighting.search_api:HighlightingSearchApi
+    	fast_search_solr_highlighting=ckanext.highlighting.package_fast_search_api:FastSearchApi
 
 	""",
 )

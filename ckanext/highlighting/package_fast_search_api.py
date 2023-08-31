@@ -9,9 +9,8 @@ import ckan.lib.dictization.model_dictize as model_dictize
 import ckan.lib.navl.dictization_functions
 import ckan.plugins as plugins
 
-from ckan.common import _
-
 from ckan.plugins import implements, SingletonPlugin
+
 import ckan.plugins.toolkit as toolkit
 from ckan.logic import ValidationError
 
@@ -36,7 +35,7 @@ ValidationError = logic.ValidationError
 _get_or_bust = logic.get_or_bust
 
 
-class HighlightingSearchApi(SingletonPlugin):
+class FastSearchApi(SingletonPlugin):
     '''
     Highlighting Search API 
     '''
@@ -51,12 +50,12 @@ class HighlightingSearchApi(SingletonPlugin):
 
 def _get_functions():
     return {            
-            'package_search_highlighted': package_search_highlighted
+            'package_fast_search': package_fast_search
     }
 
 
 @toolkit.side_effect_free
-def package_search_highlighted(context, data_dict):
+def package_fast_search(context, data_dict):
     '''
     This function extends the functionality provided by package_search 
     by allowing highlighting queries. The highlight text will be added
@@ -64,6 +63,7 @@ def package_search_highlighted(context, data_dict):
     parameters. 
     '''
     # sometimes context['schema'] is None
+    log.debug("Start package_fast_search")
     schema = (context.get('schema') or
               logic.schema.default_package_search_schema())
     if isinstance(data_dict.get('facet.field'), str):
@@ -79,7 +79,8 @@ def package_search_highlighted(context, data_dict):
     model = context['model']
     session = context['session']
 
-    _check_access('package_search', context, data_dict)
+    # KG Brauchen wir das? Ich glaube nicht
+     #_check_access('package_search', context, data_dict)
 
     # Move ext_ params to extras and remove them from the root of the search
     # params, so they don't cause and error
@@ -88,8 +89,9 @@ def package_search_highlighted(context, data_dict):
         data_dict['extras'][key] = data_dict.pop(key)
 
     # check if some extension needs to modify the search params
-    for item in plugins.PluginImplementations(plugins.IPackageController):
-        data_dict = item.before_search(data_dict)
+    #needed?
+    #for item in plugins.PluginImplementations(plugins.IPackageController):
+    #    data_dict = item.before_search(data_dict)
 
     # the extension may have decided that it is not necessary to perform
     # the query
@@ -152,9 +154,11 @@ def package_search_highlighted(context, data_dict):
             if package_dict:
                 ## the package_dict still needs translating when being viewed
                 package_dict = json.loads(package_dict)
-                if context.get('for_view'):
-                    for item in plugins.PluginImplementations( plugins.IPackageController):
-                        package_dict = item.before_view(package_dict)
+                # TEST is it needed?
+                # Creates access to harvest_object
+                #if context.get('for_view'):
+                #     for item in plugins.PluginImplementations( plugins.IPackageController):
+                #         package_dict = item.before_view(package_dict)
                 results.append(package_dict)
             else:
                 # Here get the whole package. But should not occur because it should be in the SOLR
@@ -192,20 +196,21 @@ def package_search_highlighted(context, data_dict):
         for key_, value_ in list(value.items()):
             new_facet_dict = {}
             new_facet_dict['name'] = key_
-            if key in ('groups', 'organization'):
-                group = model.Group.get(key_)
-                if group:
-                    new_facet_dict['display_name'] = group.display_name
-                else:
-                    new_facet_dict['display_name'] = key_
-            elif key == 'license_id':
-                license = model.Package.get_license_register().get(key_)
-                if license:
-                    new_facet_dict['display_name'] = license.title
-                else:
-                    new_facet_dict['display_name'] = key_
-            else:
-                new_facet_dict['display_name'] = key_
+            # TEST needed?
+            # if key in ('groups', 'organization'):
+            #     group = model.Group.get(key_)
+            #     if group:
+            #         new_facet_dict['display_name'] = group.display_name
+            #     else:
+            #         new_facet_dict['display_name'] = key_
+            # elif key == 'license_id':
+            #     license = model.Package.get_license_register().get(key_)
+            #     if license:
+            #         new_facet_dict['display_name'] = license.title
+            #     else:
+            #         new_facet_dict['display_name'] = key_
+            # else:
+            new_facet_dict['display_name'] = key_
             new_facet_dict['count'] = value_
             restructured_facets[key]['items'].append(new_facet_dict)
     search_results['search_facets'] = restructured_facets

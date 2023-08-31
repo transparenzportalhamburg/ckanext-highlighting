@@ -1,0 +1,164 @@
+{
+    "id": "03d6cf52-f4d3-41ef-8faf-cdf9a0e39dd3",
+    "name": "25fd6a32-e04d-45e4-ae2e-54be4735eb29",
+    "title": "hamburg test",
+    "version": null,
+    "url": null,
+    "author": "test_author",
+    "author_email": null,
+    "maintainer": "BA Hamburg-Nord, IT-Angelegenheiten der Bezirksverwaltung",
+    "maintainer_email": "test@foo.bar",
+    "notes": "test notes",
+    "license_id": "dl-de-by-2.0",
+    "type": "document",
+    "owner_org": "0c7513a0-802a-4bce-9d97-378c1cd265b8",
+    "creator_user_id": "164c0ab6-bb25-469e-b3be-628bddd11a39",
+    "metadata_created": "2022-01-12T10:17:15.501025",
+    "metadata_modified": "2022-01-12T10:17:15.501031",
+    "private": false,
+    "state": "active",
+    "resources": [
+        {
+            "id": "0e06f149-32c1-46f3-acdb-3beae5f8fd49",
+            "package_id": "03d6cf52-f4d3-41ef-8faf-cdf9a0e39dd3",
+            "url": "http://daten.transparenz.hamburg.de/Dataport.HmbTG.ZS.Webservice.GetRessource100/GetRessource100.svc/aa8b259f-cf97-492b-8015-1600901b1b24/Vorbescheid_nach_%C2%A7_63_HBauO.pdf",
+            "format": "PDF",
+            "description": null,
+            "hash": "113095",
+            "position": 0,
+            "name": "Vorbescheid nach \u00a7 63 HBauO",
+            "resource_type": null,
+            "mimetype": null,
+            "mimetype_inner": null,
+            "size": 113095,
+            "created": "2017-01-27T11:09:13.893132",
+            "last_modified": null,
+            "metadata_modified": "2022-01-12T10:17:15.495643",
+            "cache_url": null,
+            "cache_last_updated": null,
+            "url_type": null,
+            "state": "active",
+            "file_size": "113095",
+            "language": "de",
+            "revision_id": "59cf2b80-11a1-4f8e-b55c-b50bf59e5611",
+            "fulltext": "",
+            "fulltext_clear": ""
+        }
+    ],
+    "num_resources": 1,
+    "tags": [],
+    "num_tags": 0,
+    "extras": [
+        {
+            "id": "3e1b9afa-1b1c-45b5-9fa5-af2721995dd7",
+            "package_id": "03d6cf52-f4d3-41ef-8faf-cdf9a0e39dd3",
+            "key": "dates",
+            "value": "[{\"date\": \"2015-07-01T00:00:00\", \"role\": \"veroeffentlicht\"}]",
+            "state": "active"
+        },
+        {
+            "id": "b0bd8e0b-8e1a-4819-b614-b1078d70c0f4",
+            "package_id": "03d6cf52-f4d3-41ef-8faf-cdf9a0e39dd3",
+            "key": "fauthor",
+            "value": "2373314363097591808770463003042524197",
+            "state": "active"
+        },
+        {
+            "id": "a4fc985a-72da-42ed-a1d3-3e383ff02785",
+            "package_id": "03d6cf52-f4d3-41ef-8faf-cdf9a0e39dd3",
+            "key": "fharvest_source_id",
+            "value": "256720896949811201154630736886225195458",
+            "state": "active"
+        },
+        {
+            "id": "bc29556c-1a1c-428e-bc9b-3edb5a669e06",
+            "package_id": "03d6cf52-f4d3-41ef-8faf-cdf9a0e39dd3",
+            "key": "fsource",
+            "value": "294161199499959838237630907062823908585",
+            "state": "active"
+        },
+        {
+            "id": "b761d16f-a5a3-4436-867a-a3d0b41f6a28",
+            "package_id": "03d6cf52-f4d3-41ef-8faf-cdf9a0e39dd3",
+            "key": "latestVersion",
+            "value": "true",
+            "state": "active"
+        },
+        {
+            "id": "9bcdc006-ddea-433c-bf1f-851bf477e186",
+            "package_id": "03d6cf52-f4d3-41ef-8faf-cdf9a0e39dd3",
+            "key": "mainDocument",
+            "value": "true",
+            "state": "active"
+        },
+        {
+            "id": "2f8d0017-93fa-4b2c-ba0d-262d3fe44248",
+            "package_id": "03d6cf52-f4d3-41ef-8faf-cdf9a0e39dd3",
+            "key": "metadata_original_id",
+            "value": "moi",
+            "state": "active"
+        },
+        {
+            "id": "cd5fd8ce-42d3-45d2-bb23-26b4f8da136f",
+            "package_id": "03d6cf52-f4d3-41ef-8faf-cdf9a0e39dd3",
+            "key": "registerobject_type",
+            "value": "baugenehmigungen",
+            "state": "active"
+        },
+        {
+            "id": "0ff80b5b-ca27-4bf9-afd5-f324e2b99682",
+            "package_id": "03d6cf52-f4d3-41ef-8faf-cdf9a0e39dd3",
+            "key": "source",
+            "value": "test_source",
+            "state": "active"
+        },
+        {
+            "id": "8597cd52-a45b-4c88-8610-7b6115c0c104",
+            "package_id": "03d6cf52-f4d3-41ef-8faf-cdf9a0e39dd3",
+            "key": "terms_of_use",
+            "value": "{\"license_id\": \"id\", \"license_url\": \"url\", \"attribution_text\": \"text\", \"is_free_to_use\": false}",
+            "state": "active"
+        },
+        {
+            "id": "1c17ff55-2482-440f-a179-0e90b059074d",
+            "package_id": "03d6cf52-f4d3-41ef-8faf-cdf9a0e39dd3",
+            "key": "title_sort",
+            "value": "default_test_dataset",
+            "state": "active"
+        }
+    ],
+    "groups": [
+        {
+            "id": "6274e9b3-bf60-4227-869c-476d29a46d93",
+            "name": "infrastruktur-bauen-und-wohnen",
+            "title": "Infrastruktur, Bauen und Wohnen",
+            "type": "organization",
+            "description": "",
+            "image_url": "",
+            "created": "2021-12-22T12:09:48.018985",
+            "is_organization": false,
+            "approval_status": "approved",
+            "state": "active",
+            "capacity": "public",
+            "display_name": "Infrastruktur, Bauen und Wohnen",
+            "image_display_url": ""
+        }
+    ],
+    "organization": {
+        "id": "0c7513a0-802a-4bce-9d97-378c1cd265b8",
+        "name": "hmdklgv",
+        "title": "",
+        "type": "organization",
+        "description": "",
+        "image_url": "",
+        "created": "2021-12-22T12:08:54.426601",
+        "is_organization": true,
+        "approval_status": "approved",
+        "state": "active"
+    },
+    "relationships_as_subject": [],
+    "relationships_as_object": [],
+    "isopen": false,
+    "license_url": "http://www.govdata.de/dl-de/by-2-0",
+    "license_title": "Datenlizenz Deutschland - Namensnennung - 2.0"
+}

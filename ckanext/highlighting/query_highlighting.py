@@ -1,20 +1,14 @@
 import re
 import logging
 
-from solr import SolrException
-from paste.deploy.converters import asbool
 from paste.util.multidict import MultiDict
-from pylons import config
+from ckan.common import config
 
 from ckan.common import json
 from ckan.lib.search.common import make_connection, SearchError, SearchQueryError
-import ckan.logic as logic
-import ckan.model as model
 from ckan.lib.search.query import PackageSearchQuery
 
 log = logging.getLogger(__name__)
-
-_open_licenses = None
 
 VALID_SOLR_PARAMETERS = set([
                              'q', 'fl', 'fq', 'rows', 'sort', 'start', 'wt', 'qf', 'bf', 'boost',
@@ -27,25 +21,9 @@ QUERY_FIELDS = "name^4 title^4 tags^2 groups^2 text"
 solr_regex = re.compile(r'([\\+\-&|!(){}\[\]^"~*?:])')
 
 class HighlightingPackageSearchQuery(PackageSearchQuery):
-    def normalize_query_keys(self, query):
-    	'''
-    	Many Solr highlighting parameters are in a dotted notation (e.g.,
-        `hl.simple.post`).  For such parameters, the dots will be replaced 
-        with underscores which is required by the solr function 
-        raw_query(**params).
-    	'''
-        normalized_query = {}
-        if query:
-            for key, value in query.iteritems():
-                if key.startswith('hl.'):
-                    normalized_query[key.replace('.','_')] = value
-                else:
-                    normalized_query[key] = value
-        return normalized_query
-
 
     def addHighlightedText(self, highlighting_dict, results):
-    	'''
+        '''
         This function adds the highlighted text returned by the solr search
         to package extras.
         '''
@@ -55,7 +33,7 @@ class HighlightingPackageSearchQuery(PackageSearchQuery):
                 package_dict = json.loads(result['data_dict'])
                 
 		               
-                if id in highlighting_dict.keys():
+                if id in list(highlighting_dict.keys()):
                     #if len(highlighting_dict[id]) > 0:
                     package_dict['extras'].append({'value': highlighting_dict[id], 'key' : 'highlighting'})    
                 
@@ -80,7 +58,7 @@ class HighlightingPackageSearchQuery(PackageSearchQuery):
         # check that query keys are valid
         valid_params = []
         invalid_params = []
-        for key in query.keys():
+        for key in list(query.keys()):
             if key in VALID_SOLR_PARAMETERS or key == 'hl' or key.startswith('hl.'):
                 valid_params.append(key)
             else:
@@ -89,8 +67,6 @@ class HighlightingPackageSearchQuery(PackageSearchQuery):
         if len(invalid_params) > 0:
             raise SearchQueryError("Invalid search parameters: %s" % invalid_params)
 
-	    query = self.normalize_query_keys(query)
-              
 
         # default query is to return all documents
         q = query.get('q')
@@ -146,17 +122,15 @@ class HighlightingPackageSearchQuery(PackageSearchQuery):
         conn = make_connection()
         log.debug('Package query: %r' % query)
         try:
-            solr_response = conn.raw_query(**query)
-                    
-        except SolrException, e:
-            raise SearchError('SOLR returned an error running query: %r Error: %r' %
-                              (query, e.reason))
+            solr_response = conn.search(**query)
+
+        except Exception as e:
+            raise SearchError(f'SOLR returned an error running query: {query} Error: {e}')
         try:
-            data = json.loads(solr_response)
-            response = data['response']
-            self.count = response.get('numFound', 0)
-            self.results = response.get('docs', [])
-            self.highlighted = data['highlighting']
+            #data = json.loads(solr_response)
+            self.count = solr_response.hits
+            self.results = solr_response.docs
+            self.highlighted = solr_response.highlighting
 
             # #1683 Filter out the last row that is sometimes out of order
             self.results = self.results[:rows_to_return]
@@ -164,7 +138,7 @@ class HighlightingPackageSearchQuery(PackageSearchQuery):
 
             # get any extras and add to 'extras' dict
             for result in self.results:
-                extra_keys = filter(lambda x: x.startswith('extras_'), result.keys())
+                extra_keys = [x for x in list(result.keys()) if x.startswith('extras_')]
                 extras = {}
                 for extra_key in extra_keys:
                     value = result.pop(extra_key)
@@ -178,14 +152,18 @@ class HighlightingPackageSearchQuery(PackageSearchQuery):
                 self.results = [r.get(query.get('fl')) for r in self.results]
 
             # get facets and convert facets list to a dict
-            self.facets = data.get('facet_counts', {}).get('facet_fields', {})
-            for field, values in self.facets.iteritems():
-                self.facets[field] = dict(zip(values[0::2], values[1::2]))
-        except Exception, e:
+            self.facets = solr_response.facets.get('facet_fields', {})
+            with open('/tmp/facetssolr.out', 'w') as f:
+                for field, values in self.facets.items():
+                    f.write(str(field))
+                    f.write('\n')
+                    f.write(str(values))
+                    self.facets[field] = dict(list(zip(values[0::2], values[1::2])))
+        except Exception as e:
             log.exception(e)
             raise SearchError(e)
         finally:
-            conn.close()
+            conn.get_session().close()
 
         return {'results': self.results, 'count': self.count}
 
